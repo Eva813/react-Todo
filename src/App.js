@@ -3,15 +3,25 @@
 import './all.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState, useEffect } from 'react';
+import Tabs from './Tabs'
+import TabBar from './components/TabBar'
+import ListData from './components/ListData'
 
 const initialList = [
   {
     id: '1',
     name: 'Reading',
+    isComplete: true,
   },
   {
     id: '2',
     name: 'Shopping',
+    isComplete: true,
+  },
+  {
+    id: '3',
+    name: 'See the doctor',
+    isComplete: false,
   },
 ];
 
@@ -47,6 +57,14 @@ function App() {
               <FontAwesomeIcon icon={['fa', 'plus']} />
             </a>
           </div>
+          {/* <Tabs /> */}
+          {/* <TabBar
+            dataCount={data.length}
+            setClickPage={setClickPage}
+          // totalPages={totalPages}
+          /> */}
+
+          <ListData data={initialList} />
           <div className="todoList_items">
 
             {/* 項目列表 */}
