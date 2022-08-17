@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Eva813/react-Todo/static/css/main.8d846f00.css",
-    "main.js": "/Eva813/react-Todo/static/js/main.e418bfe8.js",
-    "static/js/787.26c46cee.chunk.js": "/Eva813/react-Todo/static/js/787.26c46cee.chunk.js",
-    "index.html": "/Eva813/react-Todo/index.html",
-    "main.8d846f00.css.map": "/Eva813/react-Todo/static/css/main.8d846f00.css.map",
-    "main.e418bfe8.js.map": "/Eva813/react-Todo/static/js/main.e418bfe8.js.map",
-    "787.26c46cee.chunk.js.map": "/Eva813/react-Todo/static/js/787.26c46cee.chunk.js.map"
+    "main.css": "/%20//Eva813.github.io/react-Todo/static/css/main.8d846f00.css",
+    "main.js": "/%20//Eva813.github.io/react-Todo/static/js/main.cf2e8e90.js",
+    "static/js/787.26c46cee.chunk.js": "/%20//Eva813.github.io/react-Todo/static/js/787.26c46cee.chunk.js",
+    "index.html": "/%20//Eva813.github.io/react-Todo/index.html",
+    "main.8d846f00.css.map": "/%20//Eva813.github.io/react-Todo/static/css/main.8d846f00.css.map",
+    "main.cf2e8e90.js.map": "/%20//Eva813.github.io/react-Todo/static/js/main.cf2e8e90.js.map",
+    "787.26c46cee.chunk.js.map": "/%20//Eva813.github.io/react-Todo/static/js/787.26c46cee.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8d846f00.css",
-    "static/js/main.e418bfe8.js"
+    "static/js/main.cf2e8e90.js"
   ]
 }
