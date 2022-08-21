@@ -1,31 +1,33 @@
 import * as React from "react";
 import { useRoutes } from "react-router-dom";
-import TodoList from "../components/TodoList";
-import Login from "../components/Login";
+import Tabs from "../Tabs"
+import Login from "../components/Login"
+import Layout from "../components/Layout"
 
-function App() {
-  let element = useRoutes([
-    //     {
-    //       path: "/",
-    //       element: <Dashboard />,
-    //       children: [
-    //         {
-    //           path: "messages",
-    //           element: <DashboardMessages />,
-    //         },
-    //         { path: "tasks", element: <DashboardTasks /> },
-    //       ],
-    //     },
-    //     { path: "team", element: <AboutPage /> },
-    {
-      path: "/",
-      element: <TodoList />,
-    },
-    {
-      path: "login",
-      element: <Login />,
-    },
-  ]);
 
-  return element;
-}
+let routes = [
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/tabs",
+        element: <Tabs />,
+      },
+      { path: "login", element: <Login /> },
+    ],
+  },
+  // { path: "team", element: <AboutPage /> },
+
+  // {
+  //   path: "/todoList",
+  //   element: <TodoList />,
+  // },
+  // {
+  //   path: "/login",
+  //   element: <Login />,
+  // },
+];
+
+export default routes;
+
