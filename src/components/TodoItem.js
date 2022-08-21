@@ -5,12 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const TodoItem = (props) => {
   const { list: todoList, currentTab } = props
   const [newList, setNewList] = useState(todoList)
+  // const [check, setCheck] = useState('false')
   console.log('allData', todoList, currentTab)
 
   useEffect(() => {
+    console.log('all', todoList)
     if (currentTab == 'all') {
       setNewList(todoList)
-      // theList = todoList;
     } else if (currentTab == 'unfinished') {
       let theList = todoList.filter(item => item.isComplete == false);
       setNewList(theList)
@@ -18,16 +19,22 @@ const TodoItem = (props) => {
       let theList = todoList.filter(item => item.isComplete == true)
       setNewList(theList)
     };
-  }, [currentTab])
+  }, [currentTab, todoList])
 
-
+  const handleisComplete = (index) => {
+    let allList = [...todoList]
+    console.log('allList', allList, index)
+    console.log('allList[index].isComplete', allList[index])
+    allList[index].isComplete = !allList[index].isComplete
+    setNewList(allList)
+  }
 
   return (
     <>
-      {newList.map((item) => (
+      {newList.map((item, index) => (
         <li key={item.id}>
           <label className="todoList_label">
-            <input className="todoList_input" type="checkbox" value="true" />
+            <input className="todoList_input" type="checkbox" value="true" checked={item.isComplete} onChange={() => handleisComplete(index)} />
             <span>{item.name}</span>
           </label>
           <a href="#">
