@@ -149,6 +149,10 @@
   background-color: var(--right-color);
 }
 
+.error-message{
+  color:#ED4F32;
+  display:block;
+}
 /* 
 --------------------------
       Forms

@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
 import '../signUp.css'
-
+import { useForm } from "react-hook-form";
 
 //https://bobbyhadz.com/blog/react-add-remove-class-on-click
 const SignUp = () => {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const navigateToSignIn = () => {
     navigate('/SignIn');
   };
+  const onSubmit = data => alert(JSON.stringify(data));
+  const onError = (errors, e) => console.log(errors, e);
 
 
 
@@ -44,11 +47,14 @@ const SignUp = () => {
                 </div>
               </div>
               <p className="small">or use your email for registration:</p>
-              <form id="sign-up-form">
-                <input type="text" placeholder="Name" />
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <button className="control-button up">Sign Up</button>
+              <form id="sign-up-form" onSubmit={handleSubmit(onSubmit, onError)}>
+                <input type="text" placeholder="Name"  {...register("name", { required: { value: true, message: "name is required" }, minLength: { value: 6, message: "Name min length is 6" } })} />
+                <p className="error-message">{errors.name?.message}</p>
+                <input placeholder="Email" {...register("account", { required: { value: true, message: "Email Address is required" }, pattern: { value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g, message: "follow Email rule" } })} />
+                <p className="error-message">{errors.account?.message}</p>
+                <input type="password" placeholder="Password"  {...register("password", { required: { value: true, message: "Password is required" }, minLength: { value: 6, message: "min length is 6" } })} />
+                <p className="error-message">{errors.password?.message}</p>
+                <button className="control-button up" type="submit">Sign Up</button>
               </form>
             </div>
           </div>

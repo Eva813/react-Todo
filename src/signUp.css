@@ -1,5 +1,5 @@
 :root{
-  --form-height:500px;
+  --form-height:600px;
   --form-width: 900px;
   /*  Sea Green */
   --left-color: #9fdeaf;
@@ -36,6 +36,11 @@
   margin: 0 auto;
 }
 
+.error-message{
+  color:#ED4F32;
+  display:block;
+  margin-bottom: 0.2rem;
+}
 
 /* 
 ----------------------

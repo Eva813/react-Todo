@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import '../login.css'
 import { useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form";
 
 
 //https://bobbyhadz.com/blog/react-add-remove-class-on-click
 const SignIn = () => {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const navigateToSignUp = () => {
     navigate('/SignUp');
   };
 
+  const onSubmit = data => alert(JSON.stringify(data));
+  const onError = (errors, e) => console.log(errors, e);
 
   return (
     <>
@@ -44,11 +48,13 @@ const SignIn = () => {
                 </div>
               </div>
               <p className="small">or use your email account:</p>
-              <form id="sign-in-form">
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
+              <form id="sign-in-form" onSubmit={handleSubmit(onSubmit, onError)}>
+                <input placeholder="Email" {...register("account", { required: { value: true, message: "Email Address is required" }, pattern: { value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g, message: "follow Email rule" } })} />
+                <p className="error-message">{errors.account?.message}</p>
+                <input type="password" placeholder="Password"  {...register("password", { required: { value: true, message: "Password is required" }, minLength: { value: 6, message: "min length is 6" } })} />
+                <p className="error-message">{errors.password?.message}</p>
                 <p className="forgot-password">Forgot your password?</p>
-                <button className="control-button in">Sign In</button>
+                <button className="control-button in" type="submit">Sign In</button>
               </form>
             </div>
           </div>
