@@ -55,15 +55,15 @@
   clip: rect(0, 436px, var(--form-height), 0);
 }
 
-/* .open-sign-up{
+.open-sign-up{
     animation: slideleft 1s linear forwards;
 }
 
 .open-sign-in{
     animation: slideright 1s linear forwards;
-} */
+}
 
- .overlay .sign-up{
+.overlay .sign-in, .overlay .sign-up{
   /*  Width is 385px - padding  */
   --padding: 30px;
   width: calc(385px - var(--padding) * 2);
@@ -76,19 +76,20 @@
   text-align: center;
 }
 
-/* .overlay .sign-in{
+.overlay .sign-in{
   float: left;
-} */
+}
 
 .overlay-text-left-animation{
     animation: text-slide-in-left 1s linear;
 }
-/* .overlay-text-left-animation-out{
+.overlay-text-left-animation-out{
     animation: text-slide-out-left 1s linear;
-} */
+}
 
+/* 1. */
 .overlay .sign-up{
-  /* float:right; */
+  float:left;
 }
 
 .overlay-text-right-animation{
@@ -182,7 +183,6 @@
 }
 
 .form .sign-in{
-  /* left:0; */
   right: 0;
 }
 
@@ -272,10 +272,6 @@
 
 .forgot-password:hover{
   cursor: pointer;
-}
-
-.block{
-  display: flex;
 }
 
 /* 
