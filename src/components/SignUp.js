@@ -2,15 +2,43 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
 import '../signUp.css'
 import { useForm } from "react-hook-form";
+import { useAuth } from "./Context";
 
 //https://bobbyhadz.com/blog/react-add-remove-class-on-click
 const SignUp = () => {
+  const { token, setToken } = useAuth();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const navigateToSignIn = () => {
     navigate('/SignIn');
   };
-  const onSubmit = data => alert(JSON.stringify(data));
+
+  //example way use fetch
+  const onSubmit = data => {
+    const _url = "https://todoo.5xcamp.us/users";
+    console.log({
+      user: data
+    });
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    fetch(_url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: data
+      })
+    })
+      .then(res => {
+        setToken(res.headers.get("authorization"));
+        return res.json()
+      })
+      .then(res => {
+        navigate('/Tabs')
+      })
+  }
+
   const onError = (errors, e) => console.log(errors, e);
 
 

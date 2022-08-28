@@ -6,9 +6,10 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-
+import { useAuth } from "./Context";
 
 const Layout = () => {
+  const { token } = useAuth();
   return (
     <div>
       <div id="todoListPage" className="bg-half">
