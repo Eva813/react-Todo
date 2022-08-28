@@ -14,9 +14,9 @@ const SignUp = () => {
   };
 
   //example way use fetch
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     const _url = "https://todoo.5xcamp.us/users";
-    console.log({
+    console.log('data', {
       user: data
     });
     let myHeaders = new Headers();
@@ -37,9 +37,10 @@ const SignUp = () => {
       .then(res => {
         navigate('/Tabs')
       })
+    // error: ["電子信箱 已被使用"]
   }
 
-  const onError = (errors, e) => console.log(errors, e);
+  // const onError = (errors, e) => console.log(errors, e);
 
 
 
@@ -75,11 +76,11 @@ const SignUp = () => {
                 </div>
               </div>
               <p className="small">or use your email for registration:</p>
-              <form id="sign-up-form" onSubmit={handleSubmit(onSubmit, onError)}>
-                <input type="text" placeholder="Name"  {...register("name", { required: { value: true, message: "name is required" }, minLength: { value: 6, message: "Name min length is 6" } })} />
-                <p className="error-message">{errors.name?.message}</p>
-                <input placeholder="Email" {...register("account", { required: { value: true, message: "Email Address is required" }, pattern: { value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g, message: "follow Email rule" } })} />
-                <p className="error-message">{errors.account?.message}</p>
+              <form id="sign-up-form" onSubmit={handleSubmit(onSubmit)}>
+                <input type="text" placeholder="Name"  {...register("nickname", { required: { value: true, message: "name is required" }, minLength: { value: 6, message: "Name min length is 6" } })} />
+                <p className="error-message">{errors.nickname?.message}</p>
+                <input placeholder="Email" {...register("email", { required: { value: true, message: "Email Address is required" }, pattern: { value: /^\S+@\S+$/i, message: "follow Email rule" } })} />
+                <p className="error-message">{errors.email?.message}</p>
                 <input type="password" placeholder="Password"  {...register("password", { required: { value: true, message: "Password is required" }, minLength: { value: 6, message: "min length is 6" } })} />
                 <p className="error-message">{errors.password?.message}</p>
                 <button className="control-button up" type="submit">Sign Up</button>

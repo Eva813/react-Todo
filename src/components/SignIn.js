@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import '../login.css'
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form";
-
+import { useAuth } from "./Context";
 
 //https://bobbyhadz.com/blog/react-add-remove-class-on-click
 const SignIn = () => {
@@ -11,9 +11,40 @@ const SignIn = () => {
   const navigateToSignUp = () => {
     navigate('/SignUp');
   };
+  const { token, setToken } = useAuth()
 
-  const onSubmit = data => alert(JSON.stringify(data));
-  const onError = (errors, e) => console.log(errors, e);
+  const onSubmit = (data) => {
+    const _url = "https://todoo.5xcamp.us/users/sign_in";
+    console.log('data', {
+      user: data
+    });
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    fetch(_url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: data
+      })
+    })
+      .then(res => {
+        console.log('res', res);
+        if (res.status === 401) {
+          throw new Error('登入失敗，請重新檢驗！');
+        }
+        setToken(res.headers.get("authorization"));
+        return res.json()
+      })
+      .then(res => {
+        navigate('/Tabs')
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
 
   return (
     <>
@@ -48,9 +79,9 @@ const SignIn = () => {
                 </div>
               </div>
               <p className="small">or use your email account:</p>
-              <form id="sign-in-form" onSubmit={handleSubmit(onSubmit, onError)}>
-                <input placeholder="Email" {...register("account", { required: { value: true, message: "Email Address is required" }, pattern: { value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g, message: "follow Email rule" } })} />
-                <p className="error-message">{errors.account?.message}</p>
+              <form id="sign-in-form" onSubmit={handleSubmit(onSubmit)}>
+                <input placeholder="Email" {...register("email", { required: { value: true, message: "Email Address is required" }, pattern: { value: /^\S+@\S+$/i, message: "follow Email rule" } })} />
+                <p className="error-message">{errors.email?.message}</p>
                 <input type="password" placeholder="Password"  {...register("password", { required: { value: true, message: "Password is required" }, minLength: { value: 6, message: "min length is 6" } })} />
                 <p className="error-message">{errors.password?.message}</p>
                 <p className="forgot-password">Forgot your password?</p>
