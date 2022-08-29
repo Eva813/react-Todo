@@ -87,9 +87,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/SignIn" element={<SignIn />} />
-            {/* <Route element={<ProtectedRoute />}> */}
-            <Route path="/tabs" element={<Tabs />} />
-            {/* </Route> */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/tabs" element={<Tabs />} />
+            </Route>
             <Route path="signUp" element={<SignUp />} />
             <Route path="signIn" element={<SignIn />} />
           </Route>
