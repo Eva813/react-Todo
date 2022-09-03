@@ -1,53 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './all.css'
 import TodoList from './components/TodoList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRoutes, Outlet, Link } from "react-router-dom"
 import { useAuth } from './components/Context';
 
-// const initialList = [
-//   {
-//     id: '1',
-//     name: 'Reading',
-//     isComplete: true,
-//   },
-//   {
-//     id: '2',
-//     name: 'Shopping',
-//     isComplete: true,
-//   },
-//   {
-//     id: '3',
-//     name: 'See the doctor',
-//     isComplete: false,
-//   },
-// ];
+
 
 const initialList = [
   {
     id: '1',
     content: 'Reading',
+    completed_at: null
   },
   {
     id: '2',
     content: 'Shopping',
+    completed_at: null
   },
   {
     id: '3',
     content: 'See the doctor',
+    completed_at: null
   },
 ];
 
 const Tabs = () => {
   const { token } = useAuth();
-  // console.log('prop', props)
-  // const { list: todoList } = props
-
-  // console.log('prop', todoList)
   const [list, setList] = useState(initialList);
+  const [delList, setDelList] = useState(list);
   const [item, setItem] = useState('');
-  const [completed, setCompleted] = useState();
   const [currentTab, setCurrentTab] = useState('all');
+
+  const [completedNumber, setCompletedNumber] = useState(0);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value; //assign the value of ref to the argument
+    }, [value]); //this code will run when the value of 'value' changes
+    return ref.current; //in the end, return the current ref value.
+  }
+  const prevCount = usePrevious(list)
 
 
   useEffect(() => {
@@ -79,20 +73,17 @@ const Tabs = () => {
       })
       .then(res => {
         setList(res.todos)
+        console.log('res.tod', res.todos)
+        let newArray = res.todos.filter(item => item.completed_at !== null)
+        console.log('newArray', newArray.length)
+        setCompletedNumber(Number(newArray.length))
       })
   }
 
-
-
   const handleTab = (e) => {
-
     setCurrentTab(e.target.id);
   }
 
-  // function handleChange(e) {
-  //   console.log('e,handleChange', e.target.velue)
-  //   setItem(e.target.value)
-  // }
   function handleAdd() {
     // add item
     const _url = "https://todoo.5xcamp.us/todos";
@@ -121,19 +112,27 @@ const Tabs = () => {
           id: res.id,
           completed_at: null //Response 並沒有給這項屬性，自己加上
         }])
+
         setItem('')
         console.log('new', list)
+        console.log('prevCount', prevCount)
       })
-
-    // const newList = [...list, { id: String(list.length + 1), name: item, isComplete: false, }]
-    // console.log('list', newList)
-    // setList(newList)
-    // setItem('')
   }
 
+  ///每次get todo變動去renew
+  useEffect(() => {
 
+    // let newArray = list.filter(item => item.completed_at !== null)
+    // setCompletedNumber(newArray.length)
+    getTodo()
+  }, [prevCount !== list])
+  // if (prevProps.params.id !== this.props.params.id)
   useEffect(() => {
     getTodo()
+    setDelList(list)
+
+    console.log('init', delList)
+    console.log('prevCount', prevCount)
   }, [])
 
 
@@ -153,10 +152,7 @@ const Tabs = () => {
               <li><a as={Link} to="/Tabs" id='unfinished' onClick={handleTab}>待完成</a></li>
               <li><a as={Link} to="/Tabs" id='finished' onClick={handleTab}>已完成</a></li>
             </ul>
-            <TodoList list={list} currentTab={currentTab} />
-            {/* <div className="todoList_items">
-
-        </div> */}
+            <TodoList list={list} currentTab={currentTab} completedNumber={completedNumber} />
           </div>
         </div>
       </div>
