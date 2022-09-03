@@ -533,5 +533,9 @@ nav ul a span {
   font-size: 1.5rem;
 }
 
+.todoList_statistics > a {
+  cursor: pointer;
+}
+
 /*# sourceMappingURL=all.css.map */
 
