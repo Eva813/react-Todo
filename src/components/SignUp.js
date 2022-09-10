@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
 import '../signUp.css'
-import { useForm } from "react-hook-form";
+import { useForm, watch } from "react-hook-form";
 import { useAuth } from "./Context";
 
 //https://bobbyhadz.com/blog/react-add-remove-class-on-click
@@ -81,8 +81,21 @@ const SignUp = () => {
                 <p className="error-message">{errors.nickname?.message}</p>
                 <input placeholder="Email" {...register("email", { required: { value: true, message: "Email Address is required" }, pattern: { value: /^\S+@\S+$/i, message: "follow Email rule" } })} />
                 <p className="error-message">{errors.email?.message}</p>
-                <input type="password" placeholder="Password"  {...register("password", { required: { value: true, message: "Password is required" }, minLength: { value: 6, message: "min length is 6" } })} />
+                <input type="password" placeholder="Password" name="password" id="password" {...register("password", { required: { value: true, message: "Password is required" }, minLength: { value: 6, message: "min length is 6" } })} />
                 <p className="error-message">{errors.password?.message}</p>
+                {/* 再次輸入 */}
+                {/* <p className="error-message">{errors.email?.message}</p> */}
+                <input type="password" placeholder="Password again" id="confirm_password" name="confirm_password"
+                  {...register("confirm_password", {
+                    required: { value: true },
+                    minLength: { value: 6, message: "min length is 6" },
+                    validate: (val) => {
+                      if (watch('password') != val) {
+                        return "Your passwords do no match";
+                      }
+                    }
+                  })} />
+                <p className="error-message">{errors.confirm_password?.message}</p>
                 <button className="control-button up" type="submit">Sign Up</button>
               </form>
             </div>
