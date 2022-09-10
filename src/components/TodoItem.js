@@ -5,10 +5,10 @@ import { useAuth } from '../components/Context';
 
 const TodoItem = (props) => {
   const { token } = useAuth();
-  const { list: todoList, currentTab, completedNumber } = props
+  const { list: todoList, currentTab, uncompletedNumber, setUncompletedNumber } = props
   //TODO 要分辨動後的, 以及原始的 //原始List 的改變
   const [newList, setNewList] = useState(todoList)
-  const [completedCount, setCompletedCount] = useState(completedNumber);
+  // const [completedCount, setCompletedCount] = useState(completedNumber);
   // console.log('com', completedNumber)
   useEffect(() => {
     if (currentTab === 'all') {
@@ -47,8 +47,8 @@ const TodoItem = (props) => {
         console.log('res.completed_at', res.completed_at)
         allList[index].completed_at = res.completed_at
         setNewList(allList)
-        let completedArray = allList.filter(item => item.completed_at !== null)
-        setCompletedCount(Number(completedArray.length))
+        let uncompletedArray = allList.filter(item => item.completed_at == null)
+        setUncompletedNumber(Number(uncompletedArray.length))
 
 
         console.log('new', newList)
@@ -74,8 +74,8 @@ const TodoItem = (props) => {
         let allList = [...newList]
         allList.splice(index, 1)
         setNewList(allList)
-        let completedArray = allList.filter(item => item.completed_at !== null)
-        setCompletedCount(Number(completedArray.length))
+        let uncompletedArray = allList.filter(item => item.completed_at == null)
+        setUncompletedNumber(Number(uncompletedArray.length))
         console.log('new', newList)
       })
   }
@@ -117,7 +117,7 @@ const TodoItem = (props) => {
           })
           setNewList(filterArray)
 
-          setCompletedCount(0)
+          setUncompletedNumber(0)
         })
 
     }))
@@ -138,7 +138,7 @@ const TodoItem = (props) => {
         </li>
       ))}
       <div class="todoList_statistics">
-        <p> {completedCount} 個已完成項目</p>
+        <p> {uncompletedNumber} 個未完成項目</p>
         <a onClick={handleDeleteCompleted}>清除已完成項目</a>
       </div>
     </>

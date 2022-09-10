@@ -32,7 +32,7 @@ const Tabs = () => {
   const [item, setItem] = useState('');
   const [currentTab, setCurrentTab] = useState('all');
 
-  const [completedNumber, setCompletedNumber] = useState(0);
+  const [uncompletedNumber, setUncompletedNumber] = useState(0);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -74,9 +74,9 @@ const Tabs = () => {
       .then(res => {
         setList(res.todos)
         console.log('res.tod', res.todos)
-        let newArray = res.todos.filter(item => item.completed_at !== null)
+        let newArray = res.todos.filter(item => item.completed_at == null)
         console.log('newArray', newArray.length)
-        setCompletedNumber(Number(newArray.length))
+        setUncompletedNumber(Number(newArray.length))
       })
   }
 
@@ -152,7 +152,7 @@ const Tabs = () => {
               <li><a as={Link} to="/Tabs" id='unfinished' onClick={handleTab}>待完成</a></li>
               <li><a as={Link} to="/Tabs" id='finished' onClick={handleTab}>已完成</a></li>
             </ul>
-            <TodoList list={list} currentTab={currentTab} completedNumber={completedNumber} />
+            <TodoList list={list} currentTab={currentTab} uncompletedNumber={uncompletedNumber} setUncompletedNumber={setUncompletedNumber} />
           </div>
         </div>
       </div>
