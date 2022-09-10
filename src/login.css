@@ -26,6 +26,7 @@
 .conatiner {
   /* margin: 0 auto; */
   /* padding: 87px 32px; */
+  position:relative;
 }
 .vhContainer {
   height: 100%;
@@ -395,4 +396,10 @@
   100%{
     padding-left: 80px;
   }
+}
+
+.alert-msg{
+  z-index:300;
+  position: absolute;
+  right:2rem;
 }

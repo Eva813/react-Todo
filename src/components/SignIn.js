@@ -3,6 +3,8 @@ import '../login.css'
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form";
 import { useAuth } from "./Context";
+import Alert from 'react-bootstrap/Alert';
+
 
 //https://bobbyhadz.com/blog/react-add-remove-class-on-click
 const SignIn = () => {
@@ -12,6 +14,9 @@ const SignIn = () => {
     navigate('/SignUp');
   };
   const { token, setToken } = useAuth()
+  const [showDangerAlert, setshowDangerAlert] = useState(false);
+  const [showSuccessAlert, setshowSuccessAlert] = useState(false);
+  const [msg, setmsg] = useState('');
 
   const onSubmit = (data) => {
     const _url = "https://todoo.5xcamp.us/users/sign_in";
@@ -38,10 +43,16 @@ const SignIn = () => {
         return res.json()
       })
       .then(res => {
+
         navigate('/Tabs')
+        return setshowDangerAlert(false);
       })
       .catch(error => {
         console.log(error)
+        console.log(error.message)
+        setmsg(error.message)
+        return setshowDangerAlert(true);
+
       })
   }
 
@@ -49,7 +60,13 @@ const SignIn = () => {
   return (
     <>
       {/* 典籍signin 按鈕後 */}
+
       <div className="conatiner todoListPage vhContainer">
+        <div className="alert-msg">
+          <Alert variant="danger" show={showDangerAlert} onClose={() => setshowDangerAlert(false)} dismissible className="mt-3 ml-3 alert-dismissible ">{msg}</Alert>
+          <Alert variant="success" show={showSuccessAlert} onClose={() => setshowDangerAlert(false)} dismissible className="mt-3 ml-3 alert-dismissible ">{msg}</Alert>
+        </div>
+
         <div className="login_Content container_login">
           <div className="overlay " id="overlay" >
             <div className="sign-up" id="sign-up" >
