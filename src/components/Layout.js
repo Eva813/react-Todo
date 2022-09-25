@@ -8,7 +8,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useAuth } from "./Context";
 
 const Layout = () => {
-  const { token } = useAuth();
+  const { token, setToken } = useAuth()
+
+  const handleLogOut = () => {
+    console.log('logout')
+    localStorage.clear()
+    setToken(null)
+    localStorage.setItem('user', JSON.stringify(''));
+  }
   return (
     <div>
       <div id="todoListPage" className="bg-half">
@@ -22,6 +29,7 @@ const Layout = () => {
               <Nav className="me-auto">
                 <Nav.Link as={Link} to="/SignIn" >Login</Nav.Link>
                 <Nav.Link as={Link} to="/Tabs">TodoList</Nav.Link>
+                <Nav.Link as={Link} to="/" onClick={handleLogOut}>Logout</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
