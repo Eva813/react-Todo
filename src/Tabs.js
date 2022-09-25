@@ -4,6 +4,7 @@ import TodoList from './components/TodoList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRoutes, Outlet, Link } from "react-router-dom"
 import { useAuth } from './components/Context';
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -43,6 +44,11 @@ const Tabs = () => {
   }
   const prevCount = usePrevious(list)
 
+  const navigate = useNavigate();
+  const navigateToSignUp = () => {
+    navigate('/SignUp');
+  };
+
 
   useEffect(() => {
     const tab = document.querySelector('.todoList_tab');
@@ -59,6 +65,7 @@ const Tabs = () => {
 
   //取得todo列表
   const getTodo = () => {
+    console.log('token in', token)
     const _url = "https://todoo.5xcamp.us/todos";
     fetch(_url, {
       method: 'GET',
@@ -69,6 +76,10 @@ const Tabs = () => {
     })
       .then(res => {
         console.log('res', res)
+        if (res.status == 401) {
+          // alert('please LogIn')
+          navigate('/SignIn');
+        }
         return res.json()
       })
       .then(res => {

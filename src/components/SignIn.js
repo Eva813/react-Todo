@@ -40,6 +40,8 @@ const SignIn = () => {
           throw new Error('登入失敗，請重新檢驗！');
         }
         setToken(res.headers.get("authorization"));
+        // console.log('dataSing', res.headers.get("authorization"))
+        localStorage.setItem('user', JSON.stringify(res.headers.get("authorization")));
         return res.json()
       })
       .then(res => {
